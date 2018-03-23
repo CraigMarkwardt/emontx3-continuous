@@ -472,22 +472,22 @@ the live side.
     2. Switch to the cont.h tab.
     3. Edit the line which says #define DEBUG_CONT and remove the first two slashes ("//") to uncomment that line.
     4. Rebuild the firmware and upload to your emontx3.
- 3. Activate your emonTx and wait for output.
+ 4. Activate your emonTx and wait for output.
 
 ### Voltage Calibration
- 4. When a vrms=NNNN.NN number appears, use your multimeter to take a reading of the mains voltage at the same time.  
+ 5. When a vrms=NNNN.NN number appears, use your multimeter to take a reading of the mains voltage at the same time.  
 
     Example: vrms=239.82 and multimeter reads 241.96.
- 5. Compute the voltage calibration ratio of your emonTx.  Calculate the ratio of (multimeter/vrms).  Example: (241.96/239.82) = 1.00892.
- 6. Open cal.h of the firmware source and edit the line for your voltage system.  Change the 1.0000 to your calibration ratio.
+ 6. Compute the voltage calibration ratio of your emonTx.  Calculate the ratio of (multimeter/vrms).  Example: (241.96/239.82) = 1.00892.
+ 7. Open cal.h of the firmware source and edit the line for your voltage system.  Change the 1.0000 to your calibration ratio.
 
     Example: 
 
     #define VCAL_240VAC (230.0/11.116 * 1.00892)  // 240VAC transformer
 
 ### Current Calibration
- 10. Attach your clamp current transformers around the live wire.
- 11. Safely insert the multimeter into the extension cord circuit.
+ 8. Attach your clamp current transformers around the live wire.
+ 9. Safely insert the multimeter into the extension cord circuit.
      1. IMPORTANT: disconnect the extension cord from the mains
      2. Unsplice the extension cord.
      3. Set your digital multimeter to AC current (> 1 Amp).  You will probably have to move the leads to a different input as well.
@@ -496,23 +496,23 @@ the live side.
      6. Examine the cord for any shorts and correct.
      7. Plug in extension cord to mains receptacle.
      8. Plug test device into extension cord.
- 12. First activate your test device.
- 13. Second activate the emonTx
- 14. When emonTx current readings appear as irm0 through irm3 numbers, take a multimeter current reading at the same time.
+ 10. First activate your test device.
+ 11. Second activate the emonTx
+ 12. When emonTx current readings appear as irm0 through irm3 numbers, take a multimeter current reading at the same time.
 
     Example: irm0=2.44 and multimeter reads 2.42
- 15. Compute the current calibration ratio of your emonTx for each channel.  Calculate the ratio of (multimeter/irmN).  Example: (2.42/2.44) = 0.9918.
- 17. Edit cal.h and edit the corresponding lines for ICALN.  Change the 1.0000 to the current calibration ratio for that channel.
+ 13. Compute the current calibration ratio of your emonTx for each channel.  Calculate the ratio of (multimeter/irmN).  Example: (2.42/2.44) = 0.9918.
+ 14. Edit cal.h and edit the corresponding lines for ICALN.  Change the 1.0000 to the current calibration ratio for that channel.
 
      Example:
 
      #define ICAL0 (ICAL/22*0.9918)
- 16. Repeat previous two steps for each input channel you have anbled.
+ 15. Repeat previous two steps for each input channel you have anbled.
   
 
 ### Reactive Load Calibration
- 15. No need to rebuild the firmware before this step.
- 16. With the test device still active, capture a single output line that has pac0, pre0, pac1, pre1 and so on.  These are the measured actie and reactive components.
+ 16. No need to rebuild the firmware before this step.
+ 17. With the test device still active, capture a single output line that has pac0, pre0, pac1, pre1 and so on.  These are the measured actie and reactive components.
 
      Example:  pac0=550.80,pre0=21.70
  17. For the 0th channel compute the phase calibration ratio (pre0/pac0).  Preserve the sign of the values; it is OK if this ratio is negative.
@@ -531,10 +531,10 @@ the live side.
 ### Rebuild Firmware
 
  21. Disconnect your emonTx from the mains and connect to your computer.
- 24. Rebuild and upload the firmware with your new calibration constants using the Arduino IDE.
+ 22. Rebuild and upload the firmware with your new calibration constants using the Arduino IDE.
      1. If you edited cont.h as described above, before rebuilding, open cont.h and place two slashes ("//") before #define DEBUG_CONT to comment the debugging line.  Then rebuild.
- 25. Disconnect your emonTx from your computer and reconnect to mains.
- 26. Repeat above calibration steps to verify that your emonTx is now reporting correct values.
+ 23. Disconnect your emonTx from your computer and reconnect to mains.
+ 24. Repeat above calibration steps to verify that your emonTx is now reporting correct values.
 
      Number reported with vrms= should match multimeter reading of voltage measured at same receptacle.
 
