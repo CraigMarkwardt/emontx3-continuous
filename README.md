@@ -13,13 +13,13 @@ quality.  It is designed to work with the "EmonESP" ESP8266 wifi
 output, transformer input, and 5V USB.
 
 This firmware is recommended for users who:
-  * intend to connect via EmonESP (not the built-in RFM96) 
+  * intend to connect via EmonESP (not the built-in RFM69) 
   * have an AC transformer input to measure mains voltage 
   * want to achieve maximum accuracy through calibration (which
     requires rebuilding the firmware using the Arduino IDE)
 
 This firmware is not recommended for users who:
-  * use an emonBase (via the on-board RFM96); because RFM96 support is not possible
+  * use an emonBase (via the on-board RFM69); because RFM69 support is not possible
   * don't have the AC-AC voltage sensor adapter; because the features
     of emonTx3-continuous require the mains voltage input.
 
@@ -29,8 +29,8 @@ This firmware is designed to work with the emonTx version 3 series of
 hardware available from openenergymonitor.org.  The hardware consists
 of up to four current transformers to measure mains power usage, as
 well as a pulse counter for energy meter monitoring.  The hardware
-also has a RFM96 transmitter that can send data to a base station.
-However, this firmware cannot use the RFM96 transmitter and is
+also has a RFM69 transmitter that can send data to a base station.
+However, this firmware cannot use the RFM69 transmitter and is
 designed to work with an ESP8266 "EmonESP" to transmit to a data
 collector.
 
@@ -67,7 +67,7 @@ Finally, this firmware provides diagnostics
 
 The emontx3-continuous firmware has the following features.
 
-  * Continuously amples inputs at 19230 samples/second, or 3846
+  * Continuously samples inputs at 19230 samples/second, or 3846
     samples/second for each input channel
   * Intended to be used with "EmonESP" wifi transmitter
   * This sample rate is equivalent to 77 samples per 50 Hz AC waveform
@@ -88,7 +88,7 @@ The emontx3-continuous firmware has the following features.
     AC power faults.
   * Automatically determines mains AC frequency at startup (50 Hz or 60 Hz)
   * Is fully calibratable.  Voltage, current and phase offset
-    calibration factors are availaable.  
+    calibration factors are available.  
   * Adjusts for sample time offsets beteween voltage and current, with
     accuracy of better than 1%.
   * Should be compatible with 3-phase power systems.  The phase offset
@@ -101,7 +101,7 @@ Features not supported
 
   * the firmware uses features specific to the Atmel hardware, and
     will be difficult to port to other architectures.
-  * the RFM96 transmitter on-board the emonTx is not supported; the
+  * the RFM69 transmitter on-board the emonTx is not supported; the
     transmitter software library is not compatible with the methods
     used by emonTx3-continous to achieve high sample rates (it is
     busy-wait driven instead of interrupt-driven).
@@ -127,10 +127,13 @@ measurements, the results agreed to within 1%.
 
 The emontx-continuous firmware uses the "free-running" sampling mode
 of the standard Atmega328p (Arduino Uno) that is inside the emonTx.
-The microcontroller can be programmed to report continuous samples at
-high data rate.  In addition, the unit can be programmed to sample
-each data input in round-robin fashion, which allows emontx-continuous
-to retrieve the mains voltage, and four current inputs.
+The firmware also functions in a stock Atmega2560 (Arduino Mega)
+although it has not been tested with real power monitoring
+accessories.  The microcontroller can be programmed to report
+continuous samples at high data rate.  In addition, the unit can be
+programmed to sample each data input in round-robin fashion, which
+allows emontx-continuous to retrieve the mains voltage, and four
+current inputs.
 
 ### Sample Rate
 
