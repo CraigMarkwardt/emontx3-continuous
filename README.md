@@ -184,6 +184,15 @@ never exceeded 12 samples.
 This firmware uses fast math routines from Atmel's AVR201 library to
 make accumulating quantities faster.
 
+### Fast Response
+
+Typically the firmware will report voltage mains information every 10
+seconds and power usage every 30 seconds.  However, if you have a
+sudden change of usage by more than about an Ampere, a new report will
+be issued immediately.  This allows you to get a more accurate picture
+of actual power usage, including transients, instead of having to wait
+30 seconds for a response.
+
 ### Delayed Processing
 
 Despite this strategy, there can still be problems with the high
@@ -458,6 +467,11 @@ the live side.
 ### Setup
  1. Plug the emonTx AC-AC transformer and extension cord into the same receptacle.
  2. Set the digital multimeter to AC volts, and place the measuring leads of the digital multimeter into the mains receptacle.  WARNING: this is dangerous!
+ 3. Optional (but useful): rebuild firmware with debugging enabled.
+    1. Open the firmware in the Arduino IDE.
+    2. Switch to the cont.h tab.
+    3. Edit the line which says #define DEBUG_CONT and remove the first two slashes ("//") to uncomment that line.
+    4. Rebuild the firmware and upload to your emontx3.
  3. Activate your emonTx and wait for output.
 
 ### Voltage Calibration
@@ -518,6 +532,7 @@ the live side.
 
  21. Disconnect your emonTx from the mains and connect to your computer.
  24. Rebuild and upload the firmware with your new calibration constants using the Arduino IDE.
+     1. If you edited cont.h as described above, before rebuilding, open cont.h and place two slashes ("//") before #define DEBUG_CONT to comment the debugging line.  Then rebuild.
  25. Disconnect your emonTx from your computer and reconnect to mains.
  26. Repeat above calibration steps to verify that your emonTx is now reporting correct values.
 
