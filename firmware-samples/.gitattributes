@@ -1,0 +1,2 @@
+# Mark .hex firmware files as binary
+*.hex -crlf -diff -merge
