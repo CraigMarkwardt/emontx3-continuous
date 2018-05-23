@@ -48,7 +48,7 @@
 
 // Version number of this firmware.  Update after changes
 // This version number is reported to emonCMS with tag "ever"
-#define VERSIONTAG  1005
+#define VERSIONTAG  1006
 
 // Standard includes
 #include <Arduino.h>
