@@ -15,6 +15,7 @@
 
 volatile uint8_t pulse_count_ticks = 0;  // Pulses measured by ISR
 uint32_t pulse_count = 0;                // Total lifetime pulses received
+uint32_t last_pulse_count = 0;
 
 const uint8_t pulse_countINT=         1;                              // INT 1 / Dig 3 Terminal Block / RJ45 Pulse counting pin(emonTx V3.4) - (INT0 / Dig2 emonTx V3.2)
 const uint8_t pulse_count_pin=        3;                              // INT 1 / Dig 3 Terminal Block / RJ45 Pulse counting pin(emonTx V3.4) - (INT0 / Dig2 emonTx V3.2)
@@ -48,10 +49,13 @@ uint32_t t_report_pulse = 0;
 void report_pulse_count(void)
 {
   uint32_t t = micros();
-  if (t_report_pulse == 0 || (t - t_report_pulse) > REPORT_PULSE_PERIOD) {
+  if (t_report_pulse == 0 || 
+      ((t - t_report_pulse) > REPORT_PULSE_PERIOD) && 
+       (pulse_count != last_pulse_count)) {
     push_report_uint32("pulse",pulse_count,0);
     push_report_break();
     t_report_pulse = t;
+    last_pulse_count = pulse_count;
   }
 }
 

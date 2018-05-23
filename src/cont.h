@@ -50,7 +50,7 @@
 #define REPORT_VRMS_PERIOD (10*SECS)    // [us] report voltage every 10 sec
 #define REPORT_POW_PERIOD  (30*SECS)    // [us] report power/current every 30 sec
 #define REPORT_ENERGY_PERIOD (60*SECS)  // [us] report energy every 60 sec
-#define REPORT_PULSE_PERIOD (120*SECS)  // [us] report pulse count every 120 sec
+#define REPORT_PULSE_PERIOD (1*SECS)  // [us] report pulse count every 120 sec
 #else
 // ... but for debugging purposes, we report every second.
 #define REPORT_VRMS_PERIOD (1*SECS)    // [us] 

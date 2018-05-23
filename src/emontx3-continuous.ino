@@ -110,11 +110,13 @@ void loop() {
 
   // When the input ADC buffer is quite idle, then stuff more reports into
   // the output serial buffer.  This can block for about about 2 ADC samples.
-  if (get_adc_depth() < 4 && Serial.availableForWrite() > 20) {
-    if (state > STATE_FREQ) report_pulse_count();
-    send_report();
+  if (get_adc_depth() < 4) {
+    record_pulse_count();
+    if (Serial.availableForWrite() > 20) {
+      if (state > STATE_FREQ) report_pulse_count();
+      send_report();
+    }
   }
-
 }
 
 
