@@ -23,6 +23,11 @@ This firmware is not recommended for users who:
   * don't have the AC-AC voltage sensor adapter; because the features
     of emonTx3-continuous require the mains voltage input.
 
+## Summary of Version Changes
+
+ * version 1005 - initial release to public
+ * version 1006 - bug fix for pulse counting; add ADC_NOTICE_CHAN to allow disregarding one or more current transformer inputs
+    
 ## Introduction
 
 This firmware is designed to work with the emonTx version 3 series of
@@ -81,6 +86,7 @@ The emontx3-continuous firmware has the following features.
     the mains voltage such as incandescent bulbs; and reactive power
     is 90 degrees out-of-phase with mains voltage (typically AC
     motors, compressors and fans).
+  * Allows to disable one ore more current transformer inputs.
   * Reports total cumulative active and reactive energy usage.  This
     is cumulative and builds up over time, just like a utility meter.
   * Reports the AC mains voltage, mains frequency to three digits of
@@ -102,9 +108,9 @@ Features not supported
   * the firmware uses features specific to the Atmel hardware, and
     will be difficult to port to other architectures.
   * the RFM69 transmitter on-board the emonTx is not supported; the
-    transmitter software library is not compatible with the methods
-    used by emonTx3-continous to achieve high sample rates (it is
-    busy-wait driven instead of interrupt-driven).
+    transmitter software library is potentially compatible with
+    emontx3-continuous; however, the reported values are so limited
+    that most of the functionality of this firmware would be lost.
   * the standard emonTx temperature/humidity sensor accessory is not
     usable because the DallasTemperature library is not compatible
     with the methods used by emonTx3-continous to achieve high sample
@@ -350,6 +356,26 @@ If you are debugging or calibrating your emonTx, you do not have to
 connect the EmonESP device.  Instead, keep your emontx connected to
 your computer and open the Arduino serial monitor.  The output of
 emonTx is pure text that you can read and diagnose.
+
+### Configuring
+
+The firmware is configured to work right away with no extra settings.
+However, in practice you may want to change a few things.
+
+emontx3-continuous will automatically disregard any disconnected
+current transformer channels.  This functionality relies upon a
+pull-down resistor installed in the standard emontx3 hardware that
+sets an input to zero if the physical plug is not connected.  If you
+are using non-standard hardware, or if your inputs are sometimes
+unreliable, you can disable some channels if you wish.  To do this,
+edit the cont.h file and locate the line ADC_NOTICE_CHANS, and follow
+the instructions there.  emontx3-continuous will still disregard
+channels that are disconnected, but it will also ignore any channels
+that you designate.
+
+Another area where you will likely want to configure your firmware is
+detailed calibration for your specific sensors and hardware.  See
+below in the Calibration section for more information.
 
 ## Available Readings
 
