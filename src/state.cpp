@@ -16,6 +16,9 @@ uint32_t uptime = 0;
 // Currently accumulated reading stats
 struct reading_stats vstats, istats[N_CUR_CHAN];
 
+// Which channels to notice
+const uint8_t adc_notice_chan[N_CUR_CHAN] = ADC_NOTICE_CHAN;
+
 // Calibration factors
 float VCAL, VCAL2;
 const float ical[N_CUR_CHAN] = {ICAL0, ICAL1, ICAL2, ICAL3}; // Current calibration
@@ -193,6 +196,7 @@ uint8_t scan_inputs(struct adc_readings_struct *reading,
     return STATE_STAB; // Return to the signal stabilization phase
   }
   for (j = 0; j<N_CUR_CHAN; j++) {
+    if (!adc_notice_chan[j]) continue;
     if (istats[j].present || (istats[j].n > 0 && istats[j].val_sum != 0)) {
       int16_t mean = istats[j].val_sum / istats[j].n;
       n_cur_chan ++;
@@ -211,7 +215,7 @@ uint8_t scan_inputs(struct adc_readings_struct *reading,
   }
   if (n_cur_chan == 0) {
     Serial.println("#ERROR - no current inputs enabled");
-    return STATE_STAB;  // Return to the signal stabilization phase
+    return STATE_STAB;  // Return to the signal stabilization phase, look for inputs
   }
 
   nreadings = 0;  // Initialize to zero in case we come back to this state

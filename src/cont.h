@@ -15,6 +15,13 @@
 // #define DEBUG_CONT
 
 // ======================================
+// ADC_NOTICE_CHAN: notice individual current transformer channels
+// If some channels are disconnected or meant to be ignored, then set
+// the corresponding value to zero in this array.
+//      Notice ADC Channel 0   1   2   3
+#define ADC_NOTICE_CHAN {  1,  1,  1,  1}  // 1=notice; 0=ignore
+
+// ======================================
 // ADC_PRESCALAR: This is the ADC clock prescalar.  For the emonTX which operates
 // 16 MHz, the ADC clock is (16 MHz)/(ADC_PRESCALAR).  This affects
 // how many samples per mains AC cycle can be retrieved.
