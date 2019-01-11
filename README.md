@@ -432,9 +432,9 @@ interruptions, averaged over the full waveform of every AC cycle.  The
 reported values are produced every 60 seconds, and represent the sum
 of all available input channels.
 
- * **_enac** - total cumulative active energy usage, in kWh, for all
+ * **_enac** - total cumulative active energy usage, in Wh (Watt-hours), for all
      four input channels combined.  
- * **_enre** - total cumulative reactive energy usage, in kWh, for all
+ * **_enre** - total cumulative reactive energy usage, in Wh (Watt-hours), for all
      four input channels combined.  Your
      power company typically does not bill you for this energy usage.
 
